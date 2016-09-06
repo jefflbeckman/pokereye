@@ -4,8 +4,8 @@ from werkzeug.utils import secure_filename
 
 
 
-
-UPLOAD_FOLDER = '/home/app/www-server/uploads' 
+HOSTNAME = 'http://localhost:8000'
+UPLOAD_FOLDER = 'uploads' 
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
 
 app = Flask(__name__)
@@ -20,10 +20,10 @@ def upload_file():
     #POST request, save the given file to the uploads directory
     if request.method == 'POST':
         # check if the post request has the file part
-        if 'file' not in request.files:
+        if 'image' not in request.files:
             flash('No file part')
             return redirect(request.url)
-        file = request.files['file']
+        file = request.files['image']
         # if user does not select file, browser also
         # submit a empty part without filename
         if file.filename == '':
@@ -48,12 +48,11 @@ def last_file():
     return redirect('/')
 
 def card_string_from_picture(filename):
-    return 'succesfully got ' + filename + '''
-<p>it's probably not a 4 of spades'''
+    return render_template('success.html',hostname=HOSTNAME)
 
 @app.route('/')
 def index():
-    return render_template('upload.html')
+    return render_template('upload.html',hostname=HOSTNAME)
 
 @app.route('/uploads/<path:path>')
 def send_pic(path):

@@ -5,8 +5,24 @@
     Please upload your sample photo
 
 <form action="upload" method="post" enctype="multipart/form-data">
-  <p><input type="text" name="text1" value="text default">
-  <p><input type="text" name="text2" value="a&#x03C9;b">
+  <p><select id="number">
+  	<script>
+	var select = document.getElementById("number");
+	select.options[select.options.length] = new Option("A","A");
+	for(var i = 2; i <= 10; i++) {
+	    select.options[select.options.length] = new Option(i,i);
+	}
+	select.options[select.options.length] = new Option("J","J");
+	select.options[select.options.length] = new Option("Q","Q");
+	select.options[select.options.length] = new Option("K","K");
+  	</script>
+  </select>
+  <p><select id="suit">
+  	<option value="Hearts">Hearts
+  	<option value="Diamonds">Diamonds
+  	<option value="Spades">Spades
+  	<option value="Clubs">Clubs
+  </select>
   <p><input type="file" name="image">
   <p><button type="submit">Submit</button>
 </form>
