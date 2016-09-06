@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+  <h1>Pokereye</h1>
+  <p class="important">
+    Please upload your sample photo
+
+<form action="upload" method="post" enctype="multipart/form-data">
+  <p><input type="text" name="text1" value="text default">
+  <p><input type="text" name="text2" value="a&#x03C9;b">
+  <p><input type="file" name="image">
+  <p><button type="submit">Submit</button>
+</form>
+{% endblock %}
+

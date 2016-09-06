@@ -1,6 +1,7 @@
 import os
-from flask import Flask, request, redirect, url_for, send_from_directory, flash
+from flask import Flask, render_template, request, redirect, url_for, send_from_directory, flash
 from werkzeug.utils import secure_filename
+
 
 
 
@@ -14,7 +15,7 @@ def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
 
-@app.route('/pokereye', methods=['GET','POST'])
+@app.route('/upload', methods=['POST'])
 def upload_file():
     #POST request, save the given file to the uploads directory
     if request.method == 'POST':
@@ -35,6 +36,8 @@ def upload_file():
             upload_file.last_file = filename
             return card_string_from_picture(filename)
 
+@app.route('/last_file')
+def last_file():
     #GET request, return the last uploaded file
     if hasattr(upload_file, 'last_file') and \
                os.path.isfile(upload_file.last_file):
@@ -50,7 +53,7 @@ def card_string_from_picture(filename):
 
 @app.route('/')
 def index():
-    return app.send_static_file('index.html') 
+    return render_template('upload.html')
 
 @app.route('/uploads/<path:path>')
 def send_pic(path):
@@ -60,7 +63,9 @@ def send_pic(path):
 ##  Main
 ##
 if __name__ == "__main__":
-  last_file = UPLOAD_FOLDER + 'roygbiv.jpg'
-  port = int(os.getenv('PORT',8080))
+  port = int(os.getenv('PORT',8000))
   app.run(host='0.0.0.0', port=port, debug=True)
+
+
+
 
